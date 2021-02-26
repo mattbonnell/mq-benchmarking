@@ -6,8 +6,8 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/tylertreat/mq-benchmarking/benchmark"
-	"github.com/tylertreat/mq-benchmarking/benchmark/mq"
+	"github.com/mattbonnell/mq-benchmarking/benchmark"
+	"github.com/mattbonnell/mq-benchmarking/benchmark/mq"
 )
 
 func newTester(subject string, testLatency bool, msgCount, msgSize int) *benchmark.Tester {
@@ -19,18 +19,6 @@ func newTester(subject string, testLatency bool, msgCount, msgSize int) *benchma
 		inproc := mq.NewInproc(msgCount, testLatency)
 		messageSender = inproc
 		messageReceiver = inproc
-	case "zeromq":
-		zeromq := mq.NewZeromq(msgCount, testLatency)
-		messageSender = zeromq
-		messageReceiver = zeromq
-	case "nanomsg":
-		nanomsg := mq.NewNanomsg(msgCount, testLatency)
-		messageSender = nanomsg
-		messageReceiver = nanomsg
-	case "kestrel":
-		kestrel := mq.NewKestrel(msgCount, testLatency)
-		messageSender = kestrel
-		messageReceiver = kestrel
 	case "kafka":
 		kafka := mq.NewKafka(msgCount, testLatency)
 		messageSender = kafka
@@ -63,21 +51,21 @@ func newTester(subject string, testLatency bool, msgCount, msgSize int) *benchma
 		iris := mq.NewIris(msgCount, testLatency)
 		messageSender = iris
 		messageReceiver = iris
-	case "surge":
-		surge := mq.NewSurgeMQ(msgCount, testLatency)
-		messageSender = surge
-		messageReceiver = surge
+	case "gq":
+		gq := mq.NewGq(msgCount, testLatency)
+		messageSender = gq
+		messageReceiver = gq
 	default:
 		return nil
 	}
 
 	return &benchmark.Tester{
-		subject,
-		msgSize,
-		msgCount,
-		testLatency,
-		messageSender,
-		messageReceiver,
+		Name:            subject,
+		MessageSize:     msgSize,
+		MessageCount:    msgCount,
+		TestLatency:     testLatency,
+		MessageSender:   messageSender,
+		MessageReceiver: messageReceiver,
 	}
 }
 
@@ -138,7 +126,8 @@ func main() {
 			"activemq|"+
 			"nats|"+
 			"beanstalkd|"+
-			"iris"+
+			"iris|"+
+			"gq"+
 			"} "+
 			"[test_latency] [num_messages] [message_size]",
 		os.Args[0])
