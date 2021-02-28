@@ -58,7 +58,7 @@ func (g *Gq) Setup() {
 	_, err := g.c.NewConsumer(g.ctx, func(message []byte) error {
 		g.handler.ReceiveMessage(message)
 		return nil
-	})
+	}, nil)
 	if err != nil {
 		log.Fatalf("gq: failed to start consumer: %s", err)
 	}

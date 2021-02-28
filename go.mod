@@ -9,7 +9,7 @@ require (
 	github.com/go-stack/stack v1.8.0 // indirect
 	github.com/golang/protobuf v1.4.3 // indirect
 	github.com/kr/beanstalk v0.0.0-20180818045031-cae1762e4858
-	github.com/mattbonnell/gq v0.0.0-20210227013037-5d8056fdcd23
+	github.com/mattbonnell/gq v0.1.0
 	github.com/mattn/go-colorable v0.1.8 // indirect
 	github.com/nats-io/nats-server/v2 v2.1.9 // indirect
 	github.com/nats-io/nats.go v1.10.0
