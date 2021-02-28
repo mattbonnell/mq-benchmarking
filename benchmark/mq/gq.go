@@ -9,11 +9,14 @@ import (
 	"github.com/mattbonnell/mq-benchmarking/benchmark"
 
 	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/lib/pq"
 )
 
 const (
-	databaseDriver = "mysql"
-	databaseDSN    = "root:password@tcp(localhost:3306)/gq"
+	databaseDriver   = "mysql"
+	databaseDSN      = "root:password@tcp(localhost:3306)/gq"
+	databaseDriverPg = "postgres"
+	databaseDSNPg    = "port=5433 dbname=gq user=postgres password=password sslmode=disable"
 )
 
 type Gq struct {
@@ -25,12 +28,12 @@ type Gq struct {
 }
 
 func NewGq(numberOfMessages int, testLatency bool) *Gq {
-	db, err := sql.Open(databaseDriver, databaseDSN)
+	db, err := sql.Open(databaseDriverPg, databaseDSNPg)
 	if err != nil {
 		log.Fatalf("gq: failed to open DB: %s", err)
 	}
 
-	c, err := gq.NewClient(db, databaseDriver)
+	c, err := gq.NewClient(db, databaseDriverPg)
 	if err != nil {
 		log.Fatalf("gq: failed to create client: %s", err)
 	}
