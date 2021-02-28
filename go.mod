@@ -2,8 +2,6 @@ module github.com/mattbonnell/mq-benchmarking
 
 go 1.16
 
-replace github.com/mattbonnell/gq => ../gq
-
 require (
 	github.com/Shopify/sarama v1.28.0
 	github.com/garyburd/redigo v1.6.2
